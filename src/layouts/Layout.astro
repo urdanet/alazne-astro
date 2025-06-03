@@ -1,5 +1,15 @@
+---
+import Navbar from '../components/Navbar.astro';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+---
+
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -10,7 +20,10 @@
 	</head>
 	<body class="bg-white text-gray-900">
 		<div class="min-h-screen">
-			<slot />
+			<Navbar lang={lang} />
+			<main class="container mx-auto px-4 py-8">
+				<slot />
+			</main>
 		</div>
 		<footer class="bg-gray-50 py-6 border-t border-gray-200">
 			<div class="container mx-auto px-4 text-center">
