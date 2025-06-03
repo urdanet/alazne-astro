@@ -1,11 +1,19 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Gallery from '../components/Gallery.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const heroProps = {
+  title: "Peluquería Alazne",
+  subtitle: "Diseño y cuidado capilar profesional en un ambiente acogedor",
+  ctaText: "Agendar Cita",
+  ctaLink: "/citas"
+};
 ---
 
 <Layout>
-	<Welcome />
+  <Hero {...heroProps} />
+  <Services />
+  <Gallery />
 </Layout>
