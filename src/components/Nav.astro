@@ -4,17 +4,17 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-function toggleMobileMenu() {
-  const menu = document.getElementById('mobile-menu');
-  if (menu) menu.classList.toggle('hidden');
-}
+const pathWithoutLang = Astro.url.pathname.replace(/^\/(es|eus)/, '');
 
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobile-menu");
+  if (menu) menu.classList.toggle("hidden");
+}
 ---
 
 <nav class="bg-white border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
-      
       <!-- Logo o título -->
       <div class="flex-shrink-0 flex items-center">
         <a href={`/${lang}/home/`} class="text-xl font-bold text-gray-800">
@@ -31,9 +31,18 @@ function toggleMobileMenu() {
           aria-label="Abrir menú"
           onclick="toggleMobileMenu()"
         >
-          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            class="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
       </div>
@@ -44,20 +53,28 @@ function toggleMobileMenu() {
           href={`/${lang}/home/`}
           class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
         >
-          {t('nav.home')}
+          {t("nav.home")}
         </a>
         <a
           href={`/${lang}/about/`}
           class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
         >
-          {t('nav.about')}
+          {t("nav.about")}
         </a>
         <a
           href={`/${lang}/contact/`}
           class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
         >
-          {t('nav.contact')}
+          {t("nav.contact")}
         </a>
+        <!-- Switch de idioma -->
+        <select
+          class="bg-white border rounded-md py-1 px-2 text-sm text-gray-600 hover:text-indigo-600 focus:outline-none"
+          onchange={`window.location.href = '/' + this.value + '${pathWithoutLang}'`}
+        >
+          <option value="es" selected={lang === "es"}>ES</option>
+          <option value="eus" selected={lang === "eus"}>EUS</option>
+        </select>
       </div>
     </div>
   </div>
@@ -69,20 +86,29 @@ function toggleMobileMenu() {
         href={`/${lang}/home/`}
         class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
       >
-        {t('nav.home')}
+        {t("nav.home")}
       </a>
       <a
         href={`/${lang}/about/`}
         class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
       >
-        {t('nav.about')}
+        {t("nav.about")}
       </a>
       <a
         href={`/${lang}/contact/`}
         class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
       >
-        {t('nav.contact')}
+        {t("nav.contact")}
       </a>
+
+      <!-- Switch de idioma en móvil -->
+      <select
+        class="block w-full bg-white border rounded-md py-2 px-3 text-base text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        onchange={`window.location.href = '/' + this.value + '${pathWithoutLang}'`}
+      >
+        <option value="es" selected={lang === "es"}>ES</option>
+        <option value="eu" selected={lang === "eu"}>EUS</option>
+      </select>
     </div>
   </div>
 </nav>
@@ -90,9 +116,9 @@ function toggleMobileMenu() {
 <!-- Script para alternar el menú móvil -->
 <script>
   function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
+    const menu = document.getElementById("mobile-menu");
     if (menu) {
-      menu.classList.toggle('hidden');
+      menu.classList.toggle("hidden");
     }
   }
 </script>
