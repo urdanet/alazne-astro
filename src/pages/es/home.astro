@@ -1,0 +1,19 @@
+---
+import Hero from '@components/Hero.astro';
+import Services from '@components/Services.astro';
+import Gallery from '@components/Gallery.astro';
+import Layout from '@layouts/Layout.astro';
+
+const heroProps = {
+  title: "Peluquería Alazne",
+  subtitle: "Diseño y cuidado capilar profesional en un ambiente acogedor",
+  ctaText: "Agendar Cita",
+  ctaLink: "/citas"
+};
+---
+
+<Layout>
+  <Hero {...heroProps} />
+  <Services />
+  <Gallery />
+</Layout>
