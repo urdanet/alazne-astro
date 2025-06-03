@@ -11,7 +11,7 @@ export const ui = {
         'nav.about': 'Sobre nosotros',
         'nav.contact': 'Contacto',
       },
-    fr: {
+    eus: {
         'nav.home': 'Hasiera',
         'nav.about': 'Nor gara',
         'nav.contact': 'Kontaktua',
