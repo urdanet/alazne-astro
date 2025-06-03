@@ -1,0 +1,47 @@
+---
+interface Service {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const services: Service[] = [
+  {
+    title: "Corte de Cabello",
+    description: "Cortes modernos y personalizados para hombres y mujeres",
+    icon: "scissors"
+  },
+  {
+    title: "Coloración",
+    description: "Técnicas avanzadas de coloración y mechas",
+    icon: "paint-brush"
+  },
+  {
+    title: "Peinados Especiales",
+    description: "Peinados para ocasiones especiales y eventos",
+    icon: "crown"
+  },
+  {
+    title: "Tratamientos",
+    description: "Tratamientos capilares profesionales para tu cabello",
+    icon: "leaf"
+  }
+];
+---
+
+<section class="bg-gray-50 py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Nuestros Servicios</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {services.map((service) => (
+        <div class="text-center p-6 bg-white rounded-lg shadow">
+          <div class="text-primary-500 text-3xl mb-4">
+            <i class="fas fa-{service.icon}"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">{service.title}</h3>
+          <p class="text-gray-600">{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
