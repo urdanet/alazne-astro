@@ -1,0 +1,39 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+
+const langs = {
+  es: 'ES',
+  eu: 'EUS'
+};
+
+const currentLang = langs[lang as keyof typeof langs];
+---
+
+<nav class="bg-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <a href="/" class="text-xl font-bold text-gray-800">Alazne</a>
+      </div>
+      
+      <div class="flex items-center space-x-8">
+        <a href="/" class="text-gray-600 hover:text-indigo-600">Inicio</a>
+        <a href="/sobre-nosotros" class="text-gray-600 hover:text-indigo-600">Sobre Nosotros</a>
+        <a href="/contacto" class="text-gray-600 hover:text-indigo-600">Contacto</a>
+        <select
+          value={lang}
+          onchange="window.location.href = '/' + this.value"
+          class="bg-white border rounded-md py-1 px-2 text-sm"
+        >
+          {Object.entries(langs).map(([code, name]) => (
+            <option value={code} selected={lang === code}>{name}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>
