@@ -107,14 +107,14 @@ function toggleMobileMenu() {
         onchange={`window.location.href = '/' + this.value + '${pathWithoutLang}'`}
       >
         <option value="es" selected={lang === "es"}>ES</option>
-        <option value="eu" selected={lang === "eu"}>EUS</option>
+        <option value="eus" selected={lang === "eus"}>EUS</option>
       </select>
     </div>
   </div>
 </nav>
 
 <!-- Script para alternar el menú móvil -->
-<script>
+<script is:inline>
   function toggleMobileMenu() {
     const menu = document.getElementById("mobile-menu");
     if (menu) {
