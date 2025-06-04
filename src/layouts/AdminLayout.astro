@@ -1,0 +1,34 @@
+---
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Panel de administrador</title>
+		<link rel="stylesheet" href="/src/styles/base.css" />
+	</head>
+	<body class="bg-white text-gray-900">
+		<div class="min-h-screen">
+			<main class="container mx-auto px-4 py-8">
+				<slot />
+			</main>
+		</div>
+		<footer class="bg-gray-50 py-6 border-t border-gray-200">
+			<div class="container mx-auto px-4 text-center">
+				<p class="text-sm text-gray-600">
+					&copy; {new Date().getFullYear()} Peluquería Alazne.
+					<a
+						href="https://www.urdanet.com"
+						class="text-primary-500 hover:text-primary-600 ml-2"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Hecho por Urdanet
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>
