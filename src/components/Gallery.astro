@@ -3,8 +3,8 @@ import Image from 'astro/components/Image.astro';
 import { getLangFromUrl } from '@i18n/utils';
 import type { SrcSetValue } from 'node_modules/astro/dist/assets/types';
 
-import slide1 from '@assets/inside_1.jpeg';
-import slide2 from '@assets/inside_2.jpeg';
+import slide1 from '@assets/inside_1.webp';
+import slide2 from '@assets/inside_2.webp';
 import slide3 from '@assets/products_2.jpeg';
 import slide4 from '@assets/products.jpeg';
 
@@ -22,8 +22,8 @@ interface Title {
 }
 
 const title: Title = {
-  es: "Nuestra Galería",
-  eus: "Gure galeria"
+  es: "Galería",
+  eus: "Galeria"
 }
 
 const images: Image[] = [
@@ -69,11 +69,9 @@ const lang = getLangFromUrl(Astro.url);
           <Image 
             src={image.src} 
             alt={image.alt[lang]}
-            width={100}
-            height={256}
-            class="w-full h-full object-cover rounded-lg transition-transform group-hover:scale-105"
+            class="w-full h-auto bg-gray-800 object-cover rounded-lg transition-transform "
           />
-          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center">
+          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <h3 class="text-white text-lg font-semibold">{image.alt[lang]}</h3>
           </div>
         </div>
