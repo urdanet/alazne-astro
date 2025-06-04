@@ -10,6 +10,16 @@ interface Image {
   };
 }
 
+interface Title {
+  es: string;
+  eus: string;
+}
+
+const title: Title = {
+  es: "Nuestra Galería",
+  eus: "Gure galeria"
+}
+
 const images: Image[] = [
   {
     src: '/images/gallery/1.jpg',
@@ -46,7 +56,7 @@ const lang = getLangFromUrl(Astro.url);
 
 <section class="py-20">
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">Nuestra Galería</h2>
+    <h2 class="text-3xl font-bold text-center mb-12">{title[lang]}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {images.map((image) => (
         <div class="relative group">
