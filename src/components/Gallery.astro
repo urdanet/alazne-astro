@@ -1,27 +1,47 @@
 ---
+import Image from 'astro/components/Image.astro';
+import { getLangFromUrl } from '@i18n/utils';
+
 interface Image {
   src: string;
-  alt: string;
+  alt: {
+    es: string;
+    eus: string;
+  };
 }
 
 const images: Image[] = [
   {
     src: '/images/gallery/1.jpg',
-    alt: 'Corte de cabello moderno'
+    alt: {
+      es: 'Corte de cabello moderno',
+      eus: 'Modernu ilea korteak'
+    }
   },
   {
     src: '/images/gallery/2.jpg',
-    alt: 'Coloración profesional'
+    alt: {
+      es: 'Coloración profesional',
+      eus: 'Profesioanla koloreak'
+    }
   },
   {
     src: '/images/gallery/3.jpg',
-    alt: 'Peinado especial'
+    alt: {
+      es: 'Peinado especial',
+      eus: 'Especiala peinatua'
+    } 
   },
   {
     src: '/images/gallery/4.jpg',
-    alt: 'Tratamiento capilar'
+    alt: {
+      es: 'Tratamiento capilar',
+      eus: 'Capilar tratamenduak'
+    }
   }
 ];
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="py-20">
@@ -30,13 +50,15 @@ const images: Image[] = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {images.map((image) => (
         <div class="relative group">
-          <img 
+          <Image 
             src={image.src} 
-            alt={image.alt}
-            class="w-full h-64 object-cover rounded-lg transition-transform group-hover:scale-105"
+            alt={image.alt[lang]}
+            width={100}
+            height={256}
+            class="object-cover rounded-lg transition-transform group-hover:scale-105"
           />
           <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity flex items-center justify-center">
-            <h3 class="text-white text-lg font-semibold">{image.alt}</h3>
+            <h3 class="text-white text-lg font-semibold">{image.alt[lang]}</h3>
           </div>
         </div>
       ))}
