@@ -1,9 +1,10 @@
 ---
 import Image from 'astro/components/Image.astro';
 import { getLangFromUrl } from '@i18n/utils';
+import type { SrcSetValue } from 'node_modules/astro/dist/assets/types';
 
 interface Slide {
-  src: string;
+  src: SrcSetValue;
   headLine?: {
     es: string;
     eus: string;
@@ -21,13 +22,15 @@ interface Props {
   ctaLink: string;
 }
 
-const { title, subtitle, ctaText, ctaLink } = Astro.props;
-
 const lang = getLangFromUrl(Astro.url);
+
+import inside_1 from '@assets/inside_1.jpeg';
+import products from '@assets/products.jpeg';
+import products_2 from '@assets/products_2.jpeg';
 
 const slides: Slide[] = [
 {
-    src: '/images/slide1.jpg',
+    src: inside_1,
     headLine: {
       es: 'Bienvenido a Nuestro Salón',
       eus: 'Ongi etorri Gure Saloira'
@@ -38,7 +41,7 @@ const slides: Slide[] = [
     }
   },
   {
-    src: '/images/slide2.jpg',
+    src: products,
     headLine: {
       es: 'Experiencia y profesionalidad',
       eus: 'Esperientzia eta profesionaltasuna'
@@ -49,7 +52,7 @@ const slides: Slide[] = [
     }
   },
   {
-    src: '/images/slide3.jpg',
+    src: products_2,
     headLine: {
       es: '',
       eus: ''
