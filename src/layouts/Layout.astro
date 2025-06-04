@@ -1,11 +1,11 @@
 ---
-import Navbar from '@components/Nav.astro';
+import Navbar from "@components/Nav.astro";
 
 interface Props {
-  lang?: string;
+	lang?: string;
 }
 
-const { lang = 'es' } = Astro.props;
+const { lang = "es" } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,7 +13,21 @@ const { lang = 'es' } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- Favicon para tema claro -->
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href=/favicon_dark.svg
+			media="(prefers-color-scheme: light)"
+		/>
+
+		<!-- Favicon para tema oscuro -->
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href=/favicon_white.svg
+			media="(prefers-color-scheme: dark)"
+		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>Peluquería Alazne</title>
 		<link rel="stylesheet" href="/src/styles/base.css" />
@@ -29,7 +43,12 @@ const { lang = 'es' } = Astro.props;
 			<div class="container mx-auto px-4 text-center">
 				<p class="text-sm text-gray-600">
 					&copy; {new Date().getFullYear()} Peluquería Alazne.
-					<a href="https://www.urdanet.com" class="text-primary-500 hover:text-primary-600 ml-2" target="_blank" rel="noopener noreferrer">
+					<a
+						href="https://www.urdanet.com"
+						class="text-primary-500 hover:text-primary-600 ml-2"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						Hecho por Urdanet
 					</a>
 				</p>
