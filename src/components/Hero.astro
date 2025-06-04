@@ -24,13 +24,13 @@ interface Props {
 
 const lang = getLangFromUrl(Astro.url);
 
-import inside_1 from '@assets/inside_1.jpeg';
-import products from '@assets/products.jpeg';
-import products_2 from '@assets/products_2.jpeg';
+import slice from '@assets/slice.jpeg';
+import slice2 from '@assets/slice2.jpeg';
+import slice3 from '@assets/slice3.jpeg';
 
 const slides: Slide[] = [
 {
-    src: inside_1,
+    src: slice,
     headLine: {
       es: 'Bienvenido a Nuestro Salón',
       eus: 'Ongi etorri Gure Saloira'
@@ -41,7 +41,7 @@ const slides: Slide[] = [
     }
   },
   {
-    src: products,
+    src: slice2,
     headLine: {
       es: 'Experiencia y profesionalidad',
       eus: 'Esperientzia eta profesionaltasuna'
@@ -52,7 +52,7 @@ const slides: Slide[] = [
     }
   },
   {
-    src: products_2,
+    src: slice3,
     headLine: {
       es: '',
       eus: ''
