@@ -2,11 +2,14 @@
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import Image from 'astro/components/Image.astro';
 import logo from '@assets/logo.png';
+import { matchPathname } from "astro/assets/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const pathWithoutLang = Astro.url.pathname.replace(/^\/(es|eus)/, '');
+
+const currentPage = pathWithoutLang.replace(/^\/|\/$/g, '');
 
 function toggleMobileMenu() {
   const menu = document.getElementById("mobile-menu");
@@ -59,14 +62,22 @@ function toggleMobileMenu() {
       <div class="hidden md:flex md:space-x-8 md:items-center">
         <a
           href={`/${lang}/home/`}
-          class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+          class={
+            currentPage === 'home'
+              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+              : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+          }
         >
           {t("nav.home")}
         </a>
         <a
           href={`/${lang}/booking/`}
-          class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
-        >
+          class={
+            currentPage === 'booking'
+              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+              : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+          }
+          >
           {t("nav.booking")}
         </a>
         <!-- <a
@@ -92,13 +103,21 @@ function toggleMobileMenu() {
     <div class="px-2 pt-2 pb-3 space-y-1">
       <a
         href={`/${lang}/home/`}
-        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
-      >
+       class={
+            currentPage === 'home'
+              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+              : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+          }
+        >
         {t("nav.home")}
       </a>
       <a
         href={`/${lang}/booking/`}
-        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
+        class={
+            currentPage === 'home'
+              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+              : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+          }
       >
         {t("nav.booking")}
       </a>
