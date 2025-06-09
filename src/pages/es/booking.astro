@@ -1,0 +1,65 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+import BookSlot from "@components/BookSlot.astro";
+// Now is goona be static data
+
+const currentDate = new Date();
+const today = currentDate.toISOString().split("T")[0];
+const tomorrow = new Date(currentDate);
+tomorrow.setDate(tomorrow.getDate() + 1);
+const tomorrowDate = tomorrow.toISOString().split("T")[0];
+
+const abliables_hours = {
+  today: [
+    { hour: "10:00", available: true },
+    { hour: "11:30", available: true },
+    { hour: "13:00", available: true },
+    { hour: "14:00", available: false },
+    { hour: "15:00", available: true },
+    { hour: "16:00", available: true },
+    { hour: "17:00", available: false },
+    { hour: "18:00", available: true },
+    { hour: "19:00", available: true },
+    { hour: "20:00", available: false },
+  ],
+  tomorrow: [
+    { hour: "10:00", available: true },
+    { hour: "11:30", available: true },
+    { hour: "13:00", available: true },
+    { hour: "14:00", available: false },
+    { hour: "15:00", available: true },
+    { hour: "16:00", available: true },
+    { hour: "17:00", available: false },
+    { hour: "18:00", available: true },
+    { hour: "19:00", available: true },
+    { hour: "20:00", available: false },
+  ],
+};
+---
+
+<Layout>
+  <div class="container mx-10 px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Reserva</h1>
+    <p class="mb-6">Aquí puede reservar su turno.</p>
+    <div class="flex flex-row md:flex-col ">
+      <div>
+        <h2 class="text-2xl font-semibold mb-4">Hoy: {today}</h2>
+        <BookSlot
+          slots={abliables_hours.today.map((slot) => ({
+            time: slot.hour,
+            date: today,
+          }))}
+        />
+      </div>
+      <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Mañana: {tomorrowDate}</h2>
+        <BookSlot
+          slots={abliables_hours.tomorrow.map((slot) => ({
+            time: slot.hour,
+            date: tomorrowDate,
+          }))}
+        />
+      </div>
+  </div>
+</Layout>
