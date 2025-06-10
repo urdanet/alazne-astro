@@ -2,40 +2,29 @@
 import Layout from "@layouts/Layout.astro";
 
 import BookSlot from "@components/BookSlot.astro";
-// Now is goona be static data
 
 const currentDate = new Date();
 const today = currentDate.toISOString().split("T")[0];
+
 const tomorrow = new Date(currentDate);
 tomorrow.setDate(tomorrow.getDate() + 1);
 const tomorrowDate = tomorrow.toISOString().split("T")[0];
 
-const abliables_hours = {
-  today: [
-    { hour: "10:00", },
-    { hour: "11:30", },
-    { hour: "13:00", },
-    { hour: "14:00", },
-    { hour: "15:00", },
-    { hour: "16:00", },
-    { hour: "17:00", },
-    { hour: "18:00", },
-    { hour: "19:00", },
-    { hour: "20:00", },
-  ],
-  tomorrow: [
-    { hour: "10:00", },
-    { hour: "11:30", },
-    { hour: "13:00", },
-    { hour: "14:00", },
-    { hour: "15:00", },
-    { hour: "16:00", },
-    { hour: "17:00", },
-    { hour: "18:00", },
-    { hour: "19:00", },
-    { hour: "20:00", },
-  ],
-};
+interface Slot {
+  hour: string;
+}
+
+interface AvailableHours {
+  today: Slot[];
+  tomorrow: Slot[];
+}
+
+// 🔗 URL de tu API REST
+const response = await fetch("http://localhost:8000/api/available-bookings"); // Ajusta la URL real
+const json = await response.json();
+
+const abliables_hours: AvailableHours = json.data.available_hours || { today: [], tomorrow: [] };
+
 ---
 
 <Layout>
