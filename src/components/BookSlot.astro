@@ -16,17 +16,16 @@ interface Props {
 const { slots } = Astro.props as Props;
 ---
 
-<ul class="flex flex-row flex-wrap gap-20">
+<ul class="flex flex-row md:flex-row flex-wrap gap-20">
   {slots.map((slot) => (
-  <li  aria-label={`Reservar cita el ${slot.time}`} class="cursor-pointer">
+  <li aria-label={`Reservar cita el ${slot.time}`} class="cursor-pointer">
        <a
         href={`/${lang}/booking/form/${encodeURIComponent(slot.date)}&${encodeURIComponent(slot.time)}`}
         class="
-          block
-          border-2 border-red-500 rounded-lg p-4 h-24 flex items-center justify-center
+          border-2 border-red-500 rounded-l-lg p-4 h-24 flex items-center justify-center
           text-center text-2xl font-semibold
           focus:outline-none focus:ring-2 focus:ring-red-500
-          hover:bg-red-50 transition
+          hover:bg-red-500 hover:text-white transition
         "
         aria-label={`Reservar cita el ${slot.date} a las ${slot.time}`}
       >
