@@ -5,10 +5,21 @@ import BookSlot from "@components/BookSlot.astro";
 
 const currentDate = new Date();
 const today = currentDate.toISOString().split("T")[0];
+const todayText = new Date().toLocaleDateString("es-ES", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+
 
 const tomorrow = new Date(currentDate);
 tomorrow.setDate(tomorrow.getDate() + 1);
 const tomorrowDate = tomorrow.toISOString().split("T")[0];
+const tomorrowText = new Date(tomorrow).toLocaleDateString("es-ES", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 interface Slot {
   hour: string;
@@ -33,7 +44,7 @@ const abliables_hours: AvailableHours = json.data.available_hours || { today: []
     <p class="mb-6">Aquí puede reservar su turno.</p>
     <div class="flex flex-col md:flex-col">
       <div>
-        <h2 class="text-2xl font-semibold mb-4">Hoy: {today}</h2>
+        <h2 class="text-2xl font-semibold mb-4">Hoy: {todayText}</h2>
         <BookSlot
           slots={abliables_hours.today.map((slot) => ({
             time: slot.hour,
@@ -42,7 +53,7 @@ const abliables_hours: AvailableHours = json.data.available_hours || { today: []
         />
       </div>
       <div class="mt-8">
-        <h2 class="text-2xl font-semibold mb-4">Mañana: {tomorrowDate}</h2>
+        <h2 class="text-2xl font-semibold mb-4">Mañana: {tomorrowText}</h2>
         <BookSlot
           slots={abliables_hours.tomorrow.map((slot) => ({
             time: slot.hour,
