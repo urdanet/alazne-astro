@@ -1,6 +1,5 @@
 ---
 export const prerender = false;
-
 import Layout from '@layouts/Layout.astro';
 
 const date  = Astro.params.date ? Astro.params.date : '';
@@ -101,6 +100,9 @@ const hourValue = decodeURIComponent(hour);
 
 <script> 
   import { enviarReserva } from "@scripts/reserva.ts";
+  const lang = window.location.pathname.split("/")[1];
+
+  console.log("Idioma actual:", lang);
   const form = document.querySelector("form") as HTMLFormElement;
 
   form?.addEventListener("submit", async (e) => {
@@ -118,8 +120,12 @@ const hourValue = decodeURIComponent(hour);
     const res = await enviarReserva(payload);
 
     if (res.success) {
+      const new_page = `/${lang}/booking/confirm`;
+      window.location.href = new_page;
       console.log("✅ Reserva realizada con éxito:", res.data);
     } else {
+      const new_page = `/${lang}/booking/denied`;
+      window.location.href = new_page;
       console.error("❌ Error al realizar la reserva:", res.data);
     }
   });
