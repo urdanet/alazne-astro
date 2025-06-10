@@ -1,0 +1,29 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+
+const text = {
+    es: {
+        title: "Reserva confirmada",
+        message: "Tu cita ha sido guardada correctamente. ¡Gracias por tu confianza!",
+    },
+    eus: {
+        title: "Erreserba baieztatu da!",
+        message: "Zure hitzordua ondo gorde da. Eskerrik asko zure konfiantzagatik.",
+    },
+}
+---
+
+<Layout>
+  <div class="container mx-auto px-4 py-12 max-w-2xl">
+    <div class="bg-green-100 border-l-4 border-green-600 text-green-800 p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold mb-2">{text[lang].title}</h1>
+      <p>{text[lang].message}</p>
+    </div>
+  </div>
+</Layout>
