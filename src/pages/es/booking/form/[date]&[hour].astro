@@ -1,16 +1,18 @@
 ---
-
 export const prerender = false;
 
 import Layout from '@layouts/Layout.astro';
 
-const date  = Astro.params.date;
+const date  = Astro.params.date ? Astro.params.date : '';
+const date_text = new Date(date).toLocaleDateString('es-ES', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+});
 
 const hour = Astro.params.hour ? Astro.params.hour : '';
-
 const hourValue = decodeURIComponent(hour);
 
-const { dateValue } = Astro.props;
 ---
 
 <Layout>
@@ -20,13 +22,13 @@ const { dateValue } = Astro.props;
       
       <div class="mb-8 bg-gray-50 p-4 rounded-lg border-l-4 border-red-500">
         <p class="text-gray-700">
-          Has seleccionado: <span class="font-semibold text-red-600">{hourValue}</span> el día <span class="font-semibold text-red-600">{date}</span>
+          Has seleccionado: <span class="font-semibold text-red-600">{hourValue}</span> el día <span class="font-semibold text-red-600">{date_text}</span>
         </p>
       </div>
 
       <form action="/api/reservas" method="POST" class="space-y-6">
-        <input type="hidden" name="search" value={date} />
-        <input type="hidden" name="search" value={date} />
+        <input type="hidden" name="date" value={date} />
+        <input type="hidden" name="hour" value={hourValue} />
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
@@ -50,7 +52,7 @@ const { dateValue } = Astro.props;
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </span>
-            <input id="telefono" name="telefono" type="tel" required
+            <input id="telefono" name="telefono" type="tel" required oninput="telefono_format()"
                   class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 bg-gray-50 hover:bg-white" />
           </div>
         </div>
@@ -78,3 +80,47 @@ const { dateValue } = Astro.props;
     </div>
   </div>
 </Layout>
+
+<script is:inline>  
+  function telefono_format(){
+    // Eliminar caracteres no numéricos, dejar escpacio de 3 dígitos
+    // y limitar a 9 dígitos
+    const input = document.getElementById("telefono");
+    if (input) {
+      let value = input.value.replace(/\D/g, "").substring(0, 9);
+      if (value.length > 3) {
+        value = value.substring(0, 3) + " " + value.substring(3);
+      }
+      if (value.length > 7) {
+        value = value.substring(0, 7) + " " + value.substring(7);
+      }
+      input.value = value;
+    }
+  }
+</script>
+
+<script> 
+  import { enviarReserva } from "@scripts/reserva.ts";
+  const form = document.querySelector("form") as HTMLFormElement;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const nombre = formData.get("nombre")?.toString() ?? "";
+    const apellidos = formData.get("apellidos")?.toString() ?? "";
+    const telefono = formData.get("telefono")?.toString() ?? "";
+    const email = formData.get("email")?.toString() ?? "";
+    const fecha_hora_inicio = `${formData.get("date")} ${formData.get("hour")}`;
+
+    const payload = { nombre, apellidos, telefono, email, fecha_hora_inicio };
+    console.log("Enviando reserva con los siguientes datos:", payload);
+    const res = await enviarReserva(payload);
+
+    if (res.success) {
+      console.log("✅ Reserva realizada con éxito:", res.data);
+    } else {
+      console.error("❌ Error al realizar la reserva:", res.data);
+    }
+  });
+</script>
