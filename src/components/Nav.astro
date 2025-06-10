@@ -100,12 +100,12 @@ function toggleMobileMenu() {
 
   <!-- Menú móvil (inicialmente oculto) -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
-    <div class="px-2 pt-2 pb-3 space-y-1">
+    <div class="flex flex-col px-2 pt-2 pb-3 space-y-1">
       <a
         href={`/${lang}/home/`}
        class={
             currentPage === 'home'
-              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+              ? "text-gray-600 border-2 rounded-md border-primary-500 px-3 py-2 text-sm font-medium"
               : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
           }
         >
@@ -114,8 +114,8 @@ function toggleMobileMenu() {
       <a
         href={`/${lang}/booking/`}
         class={
-            currentPage === 'home'
-              ? "text-gray-600 border-b-2 border-primary-500 px-3 py-2 text-sm font-medium"
+            currentPage === 'booking'
+              ? "text-gray-600 border-2 rounded-md border-primary-500 px-3 py-2 text-sm font-medium"
               : "text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
           }
       >
