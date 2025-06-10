@@ -4,6 +4,11 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const aria_label_text = {
+  es: "Reservar cita el ",
+  eus: "Erreserbatu "
+}
+
 export interface Slot {
   time: string
   date: string;
@@ -18,7 +23,7 @@ const { slots } = Astro.props as Props;
 
 <ul class="flex flex-row md:flex-row flex-wrap gap-20">
   {slots.map((slot) => (
-  <li aria-label={`Reservar cita el ${slot.time}`} class="cursor-pointer">
+  <li aria-label={`${aria_label_text[lang]} ${slot.time}`} class="cursor-pointer">
        <a
         href={`/${lang}/booking/form/${encodeURIComponent(slot.date)}&${encodeURIComponent(slot.time)}`}
         class="
@@ -27,7 +32,7 @@ const { slots } = Astro.props as Props;
           focus:outline-none focus:ring-2 focus:ring-red-500
           hover:bg-red-500 hover:text-white transition
         "
-        aria-label={`Reservar cita el ${slot.date} a las ${slot.time}`}
+        aria-label={`${aria_label_text[lang]} ${slot.date} - ${slot.time}`}
       >
         {slot.time}
       </a>
