@@ -12,28 +12,28 @@ const tomorrowDate = tomorrow.toISOString().split("T")[0];
 
 const abliables_hours = {
   today: [
-    { hour: "10:00", available: true },
-    { hour: "11:30", available: true },
-    { hour: "13:00", available: true },
-    { hour: "14:00", available: false },
-    { hour: "15:00", available: true },
-    { hour: "16:00", available: true },
-    { hour: "17:00", available: false },
-    { hour: "18:00", available: true },
-    { hour: "19:00", available: true },
-    { hour: "20:00", available: false },
+    { hour: "10:00", },
+    { hour: "11:30", },
+    { hour: "13:00", },
+    { hour: "14:00", },
+    { hour: "15:00", },
+    { hour: "16:00", },
+    { hour: "17:00", },
+    { hour: "18:00", },
+    { hour: "19:00", },
+    { hour: "20:00", },
   ],
   tomorrow: [
-    { hour: "10:00", available: true },
-    { hour: "11:30", available: true },
-    { hour: "13:00", available: true },
-    { hour: "14:00", available: false },
-    { hour: "15:00", available: true },
-    { hour: "16:00", available: true },
-    { hour: "17:00", available: false },
-    { hour: "18:00", available: true },
-    { hour: "19:00", available: true },
-    { hour: "20:00", available: false },
+    { hour: "10:00", },
+    { hour: "11:30", },
+    { hour: "13:00", },
+    { hour: "14:00", },
+    { hour: "15:00", },
+    { hour: "16:00", },
+    { hour: "17:00", },
+    { hour: "18:00", },
+    { hour: "19:00", },
+    { hour: "20:00", },
   ],
 };
 ---
@@ -42,7 +42,7 @@ const abliables_hours = {
   <div class="container mx-10 px-4 py-8" style="overflow-x; none;">
     <h1 class="text-3xl font-bold mb-4">Reserva</h1>
     <p class="mb-6">Aquí puede reservar su turno.</p>
-    <div class="flex flex-col md:flex-col" >
+    <div class="flex flex-col md:flex-col">
       <div>
         <h2 class="text-2xl font-semibold mb-4">Hoy: {today}</h2>
         <BookSlot
