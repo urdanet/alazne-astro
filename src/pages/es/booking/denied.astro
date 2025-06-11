@@ -1,0 +1,29 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+
+const text = {
+    es: {
+        title: "Oh no, algo salió mal",
+        message: "Parece que no hemos podido guardar tu cita. Por favor, inténtalo de nuevo más tarde o contacta con nosotros",
+    },
+    eus: {
+        title: "Oho, zerbait gaizki joan da",
+        message: "Zure hitzordua gorde ezin izan dugu. Saiatu berriro geroago edo jarri gurekin harremanetan",
+    },
+}
+---
+
+<Layout>
+  <div class="container mx-auto px-4 py-12 max-w-2xl">
+    <div class="bg-green-100 border-l-4 border-red-600 text-red-800 p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold mb-2">{text[lang].title}</h1>
+      <p>{text[lang].message} <a href="tel:+34" class="border-b-2 border-black">aquí</a>.</p>
+    </div>
+  </div>
+</Layout>
