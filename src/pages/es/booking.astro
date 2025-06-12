@@ -25,41 +25,51 @@ interface Slot {
   hour: string;
 }
 
-interface AvailableHours {
-  today: Slot[];
-  tomorrow: Slot[];
+interface DiaDisponible {
+  fecha: string;
+  horas_disponibles: Slot[];
 }
-
-// 🔗 URL de tu API REST
-const response = await fetch("http://localhost:8000/api/available-bookings"); // Ajusta la URL real
+const response = await fetch("http://localhost:8000/api/available-bookings");
 const json = await response.json();
 
-const abliables_hours: AvailableHours = json.data.available_hours || { today: [], tomorrow: [] };
+// Convertimos el objeto `data` en un array ordenado por clave
+const diasDisponibles: DiaDisponible[] = Object.values(json.data);
 
+// Opcional: aseguramos orden por fecha por si el backend no lo garantiza
+diasDisponibles.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
 ---
 
 <Layout>
   <div class="container mx-10 px-4 py-8">
     <h1 class="text-3xl font-bold mb-4">Reserva</h1>
     <p class="mb-6">Aquí puede reservar su turno.</p>
-    <div class="flex flex-col md:flex-col">
-      <div>
-        <h2 class="text-2xl font-semibold mb-4">Hoy: {todayText}</h2>
-        <BookSlot
-          slots={abliables_hours.today.map((slot) => ({
-            time: slot.hour,
-            date: today,
-          }))}
-        />
-      </div>
-      <div class="mt-8">
-        <h2 class="text-2xl font-semibold mb-4">Mañana: {tomorrowText}</h2>
-        <BookSlot
-          slots={abliables_hours.tomorrow.map((slot) => ({
-            time: slot.hour,
-            date: tomorrowDate,
-          }))}
-        />
-      </div>
+
+    {diasDisponibles.map((dia) => {
+      var fechaTexto = new Date(dia.fecha).toLocaleDateString("es-ES", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+      });
+
+      fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+      
+      if (dia.fecha === today) {
+        fechaTexto = `Hoy, ${fechaTexto}`;
+      } else if (dia.fecha === tomorrowDate) {
+        fechaTexto = `Mañana, ${fechaTexto}`;
+      }
+
+      return (
+        <div class="mt-8">
+          <h2 class="text-2xl font-semibold mb-4">{fechaTexto}</h2>
+          <BookSlot
+            slots={dia.horas_disponibles.map((slot) => ({
+              time: slot.hour,
+              date: dia.fecha,
+            }))}
+          />
+        </div>
+      );
+    })}
   </div>
 </Layout>
