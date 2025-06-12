@@ -63,6 +63,11 @@ const slides: Slide[] = [
     }
   }
 ];
+
+const href_text = {
+  es: 'Reserva aquí',
+  eus: 'Erreserba hemen',
+};
 ---
 
 <section class="relative bg-white">
@@ -90,6 +95,7 @@ const slides: Slide[] = [
                 {slide.text[lang]}
               </p>
             )}
+            <a class="mt-4 bg-red-500 text-white p-4 rounded-lg hover:bg-white hover:text-primary-500" href=`/${lang}/booking`>{href_text[lang]}</a>
           </div>
         )}
       </div>
