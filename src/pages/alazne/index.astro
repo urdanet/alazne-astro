@@ -21,7 +21,7 @@ import Logo from "@assets/logo.png";
             />
         </div>
 
-        <form class="space-y-4">
+        <form class="space-y-4" id="loginForm" autocomplete="off" novalidate>
             <div>
                 <label
                     for="username"
@@ -29,8 +29,9 @@ import Logo from "@assets/logo.png";
                     >Usuario</label
                 >
                 <input
-                    id="username"
-                    name="username"
+                    required
+                    id="usuario"
+                    name="usuario"
                     type="text"
                     placeholder="Ingresa tu usuario"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
@@ -44,6 +45,7 @@ import Logo from "@assets/logo.png";
                     >Contraseña</label
                 >
                 <input
+                    required
                     id="password"
                     name="password"
                     type="password"
@@ -59,5 +61,47 @@ import Logo from "@assets/logo.png";
                 Entrar
             </button>
         </form>
+        <div id="loginError" class="text-red-600 mt-4 text-sm hidden"></div>
+
     </div>
 </AdminLayout>
+
+<script>
+    import { login } from "@scripts/login.ts";
+
+    const form = document.querySelector("form") as HTMLFormElement;
+    const errorDiv = document.getElementById("loginError");
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (errorDiv) {
+        errorDiv.textContent = ""; // limpia errores previos
+        errorDiv.classList.add("hidden"); // oculta al inicio
+        }
+
+        const formData = new FormData(form);
+        const usuario = formData.get("usuario")?.toString() ?? "";
+        const password = formData.get("password")?.toString() ?? "";;
+
+        const payload = { usuario, password };
+        console.log("Enviando reserva con los siguientes datos:", payload);
+        const res = await login(payload);
+
+        if (res.success) {
+            console.log("✅ Succes Login:", res);
+            // Guardar token
+            localStorage.setItem("auth_token", res.token || res.data?.token);
+
+            // Redirigir al panel
+            window.location.href = "/alazne/home";
+        } else {
+            if (errorDiv) {
+                const errorMsg = res.data?.errors?.usuario?.[0] || res.message || "Error desconocido.";
+                errorDiv.textContent = errorMsg;
+                errorDiv.classList.remove("hidden");
+            }
+            console.error("❌ Error login:", res.data);
+        }
+    });
+</script>
