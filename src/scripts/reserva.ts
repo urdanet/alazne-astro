@@ -14,6 +14,25 @@ export interface ReservaRespuesta {
   data?: any;
 }
 
+interface Slot {
+  hour: string;
+}
+
+interface DiaDisponible {
+  fecha: string;
+  horas_disponibles: Slot[];
+}
+
+export async function obtenerDiasDisponibles(): Promise<DiaDisponible[]> {
+  try {
+    const response = await axios.get("http://localhost:8000/api/available-bookings");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los días disponibles:", error);
+    throw error;
+  }
+}
+
 export async function enviarReserva(payload: ReservaPayload): Promise<ReservaRespuesta> {
   try {
     const response = await axios.post("http://localhost:8000/api/booking", payload);
