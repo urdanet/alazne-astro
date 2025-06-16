@@ -24,13 +24,13 @@ interface DiaDisponible {
 }
 
 export async function obtenerDiasDisponibles(): Promise<DiaDisponible[]> {
-  try {
-    const response = await axios.get("http://localhost:8000/api/available-bookings");
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener los días disponibles:", error);
-    throw error;
-  }
+    const response = await fetch("http://localhost:8000/api/available-bookings");
+    const json = await response.json();
+
+  // Convertimos los valores del objeto en array
+  const dias: DiaDisponible[] = Object.values(json.data);
+  return dias;
+  
 }
 
 export async function enviarReserva(payload: ReservaPayload): Promise<ReservaRespuesta> {
