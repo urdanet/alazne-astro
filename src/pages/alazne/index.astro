@@ -30,6 +30,7 @@ import Logo from "@assets/logo.png";
                 >
                 <input
                     required
+                    value="julio"
                     id="usuario"
                     name="usuario"
                     type="text"
@@ -46,6 +47,7 @@ import Logo from "@assets/logo.png";
                 >
                 <input
                     required
+                    value="Urdanet.2024"
                     id="password"
                     name="password"
                     type="password"
@@ -67,7 +69,7 @@ import Logo from "@assets/logo.png";
 </AdminLayout>
 
 <script>
-    import { login } from "@scripts/login.ts";
+    import { login } from "@scripts/auth.ts";
 
     const form = document.querySelector("form") as HTMLFormElement;
     const errorDiv = document.getElementById("loginError");
@@ -89,19 +91,21 @@ import Logo from "@assets/logo.png";
         const res = await login(payload);
 
         if (res.success) {
-            console.log("✅ Succes Login:", res);
-            // Guardar token
-            localStorage.setItem("auth_token", res.token || res.data?.token);
+            console.log("✅ Succes Login:", res);           
+            
+            // Guardar el token en localStorage
+            localStorage.setItem("token", res.token || "");
 
             // Redirigir al panel
             window.location.href = "/alazne/home";
+            
         } else {
             if (errorDiv) {
-                const errorMsg = res.data?.errors?.usuario?.[0] || res.message || "Error desconocido.";
+                const errorMsg = res.message || "Error desconocido.";
                 errorDiv.textContent = errorMsg;
                 errorDiv.classList.remove("hidden");
             }
-            console.error("❌ Error login:", res.data);
+            console.error("❌ Error login:", res);
         }
     });
 </script>

@@ -1,0 +1,80 @@
+---
+import AdminLayout from "@layouts/AdminLayout.astro";
+---
+
+<AdminLayout>
+  <h1 class="text-3xl font-bold mb-4">Panel de Reservas</h1>
+
+  <div id="loading" class="text-gray-500">Cargando reservas...</div>
+  <table id="reservaTable" class="min-w-full table-auto hidden border border-gray-300 text-sm">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 border">ID</th>
+        <th class="px-4 py-2 border">Nombre</th>
+        <th class="px-4 py-2 border">Teléfono</th>
+        <th class="px-4 py-2 border">Email</th>
+        <th class="px-4 py-2 border">Fecha</th>
+        <th class="px-4 py-2 border">Estado</th>
+        <th class="px-4 py-2 border">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="reservaBody"></tbody>
+  </table>
+</AdminLayout>
+
+<script is:inline>
+  import { requireAuth } from "@scripts/auth.ts";
+  import { getReservas, deleteReserva } from "@scripts/reservas.ts";
+
+  const $ = (selector) => document.querySelector(selector);
+
+  async function cargarReservas() {
+    const reservas = await getReservas();
+    const body = $("#reservaBody");
+    body.innerHTML = "";
+
+    for (const r of reservas) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="px-4 py-2 border">${r.id}</td>
+        <td class="px-4 py-2 border">${r.nombre} ${r.apellidos}</td>
+        <td class="px-4 py-2 border">${r.telefono}</td>
+        <td class="px-4 py-2 border">${r.email}</td>
+        <td class="px-4 py-2 border">${r.fecha_hora_inicio}</td>
+        <td class="px-4 py-2 border">${r.estado}</td>
+        <td class="px-4 py-2 border">
+          <button class="text-blue-600 hover:underline" onclick="editarReserva(${r.id})">Editar</button>
+          |
+          <button class="text-red-600 hover:underline" onclick="eliminarReserva(${r.id})">Eliminar</button>
+        </td>
+      `;
+      body.appendChild(tr);
+    }
+
+    $("#loading").classList.add("hidden");
+    $("#reservaTable").classList.remove("hidden");
+  }
+
+  async function eliminarReserva(id) {
+    if (confirm("¿Deseas eliminar esta reserva?")) {
+      await deleteReserva(id);
+      await cargarReservas();
+    }
+  }
+
+  function editarReserva(id) {
+    alert("Próximamente: edición de reserva ID " + id);
+    // Aquí puedes abrir un modal o redirigir a una página /alazne/reservas/:id
+  }
+
+  async function checkAuth() {
+    const isLoggedIn = await requireAuth();
+    if (!isLoggedIn) {
+      window.location.href = "/alazne";
+    } else {
+      await cargarReservas();
+    }
+  }
+
+  checkAuth();
+</script>
