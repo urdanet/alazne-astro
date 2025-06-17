@@ -1,27 +1,6 @@
 import axios from "axios";
 
-export interface ReservaPayload {
-  nombre: string;
-  apellidos: string;
-  telefono: string;
-  email: string;
-  fecha_hora_inicio: string; // formato: YYYY-MM-DD HH:mm
-}
-
-export interface ReservaRespuesta {
-  success: boolean;
-  message: string;
-  data?: any;
-}
-
-interface Slot {
-  hour: string;
-}
-
-interface DiaDisponible {
-  fecha: string;
-  horas_disponibles: Slot[];
-}
+import type { DiaDisponible, ReservaPayload, ReservaRespuesta } from '@scripts/types.ts';
 
 export async function obtenerDiasDisponibles(): Promise<DiaDisponible[]> {
     const response = await fetch("http://localhost:8000/api/available-bookings");

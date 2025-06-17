@@ -1,13 +1,5 @@
 import axios from "axios";
-
-export interface Reserva {
-  id: number;
-  nombre: string;
-  telefono: string;
-  email: string;
-  fecha: string;
-  estado: string;
-}
+import type { Reserva } from '@scripts/types.ts';
 
 export async function getReservas(): Promise<Reserva[]> {
   try {
@@ -65,36 +57,27 @@ export async function updateReserva(id: number, data: Partial<Reserva>): Promise
   }
 }
 
-function toBackendDatetime(dt: string) {
-  // dt puede venir como "2025-06-16T10:00" o "2025-06-16T10:00:00.000000Z"
-  if (!dt) return "";
-  // Si ya está en formato correcto, no lo toques
-  if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dt)) return dt;
-  // Si viene como "2025-06-16T10:00" o "2025-06-16T10:00:00.000000Z"
-  const [date, time] = dt.split("T");
-  if (!date || !time) return dt;
-  return `${date} ${time.slice(0, 5)}`;
-}
+export async function createReserva(data: Partial<Reserva>): Promise<Reserva | null> {
+  try {
+    const token = typeof window !== "undefined"
+      ? localStorage.getItem("token")
+      : null;
+    if (!token) throw new Error("No hay token de autenticación");
 
-async function handleEditSubmit(e: Event) {
-  e.preventDefault();
-  if (!editReserva) return;
-
-  // Prepara el objeto para el backend
-  const dataToSend = {
-    ...form,
-    id: editReserva.id,
-    fecha_hora_inicio: toBackendDatetime(form.fecha_hora_inicio || ""),
-    // Asegúrate de que estado y status sean int si el backend lo espera así
-    estado: Number(form.estado),
-    status: Number(form.status),
-  };
-
-  const updated = await updateReserva(editReserva.id, dataToSend);
-  if (updated) {
-    setRows(rows!.map(r => r.id === updated.id ? updated : r));
-    setShowModal(false);
-  } else {
-    alert("No se pudo actualizar la reserva");
+    const response = await axios.post(
+      `http://localhost:8000/api/reservas`,
+      JSON.stringify(data),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // asumimos que la API devuelve { data: {...} } o el objeto directo
+    return response.data.data ?? response.data;
+  } catch (error) {
+    console.error("Error al crear reserva:", error);
+    return null;
   }
 }

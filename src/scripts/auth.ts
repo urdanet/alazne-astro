@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { UserPayLoad, LoginRespuesta } from '@scripts/types.ts';
 
 // Función para obtener el token de forma segura (solo en navegador)
 function getStoredToken(): string | null {
@@ -25,17 +26,6 @@ if (typeof window !== 'undefined') {
     if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-}
-
-export interface UserPayLoad {
-    usuario: string;
-    password: string;
-}
-
-export interface LoginRespuesta {
-    success: boolean;
-    message: string;
-    token?: string;
 }
 
 export async function login(payload: UserPayLoad): Promise<LoginRespuesta> {
@@ -91,33 +81,3 @@ export function logout() {
     removeStoredToken();
     delete axios.defaults.headers.common['Authorization'];
 }
-
-
-export interface Reserva {
-    id: number;
-    nombre: string;
-    telefono: string;
-    email: string;
-    fecha: string;
-    estado: string;
-  }
-
-export async function getReservas(): Promise<Reserva[]> {
-    try {
-        const token = getStoredToken();
-        // console.log("Token:", token);
-        if (!token) return [];
-
-        const response = await axios.get("http://localhost:8000/api/reservas", {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        console.log(response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Error al obtener reservas:", error);
-        throw error;
-    }
-  }
-  
