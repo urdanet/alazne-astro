@@ -71,10 +71,9 @@ export async function requireAuth(): Promise<boolean> {
         if (typeof window === 'undefined') return false;
 
         const token = getStoredToken();
-        console.log("Token:", token);
+        // console.log("Token:", token);
         if (!token) return false;
-        console.log("Token:", token);
-
+        
         const response = await axios.get("http://localhost:8000/api/me", {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -92,3 +91,33 @@ export function logout() {
     removeStoredToken();
     delete axios.defaults.headers.common['Authorization'];
 }
+
+
+export interface Reserva {
+    id: number;
+    nombre: string;
+    telefono: string;
+    email: string;
+    fecha: string;
+    estado: string;
+  }
+
+export async function getReservas(): Promise<Reserva[]> {
+    try {
+        const token = getStoredToken();
+        // console.log("Token:", token);
+        if (!token) return [];
+
+        const response = await axios.get("http://localhost:8000/api/reservas", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener reservas:", error);
+        throw error;
+    }
+  }
+  
