@@ -13,6 +13,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@assets/*": ["src/assets/*"],
       "@scripts/*": ["src/scripts/*"],
+      "@fullcalendar/": ["node_modules/@fullcalendar/"]
     }
   }
 }
