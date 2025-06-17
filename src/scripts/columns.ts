@@ -1,31 +1,20 @@
 // src/columns.ts
-import { createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/table-core';
 import type { Reserva } from '@scripts/types.ts';
 
-const columnHelper = createColumnHelper<Reserva>();
+const helper = createColumnHelper<Reserva>();
 
 export const columns = [
-  columnHelper.accessor('id', {
-    header: 'ID',
-    cell: info => info.getValue().toString(),
-  }),
-  columnHelper.accessor(r => `${r.nombre} ${r.apellidos}`, {
+  helper.accessor('id',             { header: 'ID' }),
+  helper.accessor(r => `${r.nombre} ${r.apellidos}`, {
     id: 'nombre',
-    header: 'Nombre completo',
-    cell: info => info.getValue(),
+    header: 'Nombre completo'
   }),
-  columnHelper.accessor('telefono', {
-    header: 'Teléfono',
-  }),
-  columnHelper.accessor('email', {
-    header: 'Email',
-  }),
-  columnHelper.accessor('fecha_hora_inicio', {
+  helper.accessor('telefono',       { header: 'Teléfono' }),
+  helper.accessor('email',          { header: 'Email' }),
+  helper.accessor('fecha_hora_inicio', {
     header: 'Fecha y hora',
-    cell: info => info.getValue().slice(0, 16),
+    cell: info => info.getValue().slice(0,16)
   }),
-  columnHelper.accessor('estado', {
-    header: 'Estado',
-    cell: info => String(info.getValue()),
-  }),
+  helper.accessor('estado',         { header: 'Estado' }),
 ];
