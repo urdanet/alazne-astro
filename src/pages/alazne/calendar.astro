@@ -1,0 +1,20 @@
+---
+import AdminLayout from "@layouts/AdminLayout.astro";
+import CalendarView from "@components/CalendarView.tsx";
+---
+
+<AdminLayout>
+    <CalendarView client:load />
+</AdminLayout>
+
+<script>
+    import { requireAuth } from "@scripts/auth";
+
+    async function checkAuth() {
+        const isLoggedIn = await requireAuth();
+        if (!isLoggedIn) {
+            window.location.href = "/alazne";
+        }
+    }
+    checkAuth();
+</script>
